@@ -1,7 +1,5 @@
-package com.example.GritAcademyAPI.studentsCourses;
+package com.example.GritAcademyAPI.studentCourses;
 
-import com.example.GritAcademyAPI.students.Students;
-import com.example.GritAcademyAPI.students.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

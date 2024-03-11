@@ -1,26 +1,22 @@
-package com.example.GritAcademyAPI.studentsCourses;
+package com.example.GritAcademyAPI.studentCourses;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-/**
- * Class representing the vehicles table in the DB
- */
 @Entity(name = "student_courses")
 @Table(name = "student_courses")
 @Data
 public class StudentCourses {
 
-    //PK
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     @Id
     private Long id;
 
     @Column(name = "course_id")
-    private int courseId;
+    private long courseId;
     @Column(name = "student_id")
-    private int studentId;
+    private long studentId;
 
 
 

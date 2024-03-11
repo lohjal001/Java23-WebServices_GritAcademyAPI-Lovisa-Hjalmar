@@ -15,7 +15,7 @@ public class CoursesController {
     @Autowired
     CoursesServices coursesServices;
 
-    @GetMapping(value = "/taxicos", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/courses", produces = MediaType.APPLICATION_JSON_VALUE)
     Iterable<Courses> getCourses(){
         return coursesServices.getCourses();
     }

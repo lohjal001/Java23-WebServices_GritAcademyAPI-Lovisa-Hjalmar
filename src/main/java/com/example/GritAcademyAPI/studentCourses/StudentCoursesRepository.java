@@ -1,6 +1,5 @@
-package com.example.GritAcademyAPI.studentsCourses;
+package com.example.GritAcademyAPI.studentCourses;
 
-import com.example.GritAcademyAPI.students.Students;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
