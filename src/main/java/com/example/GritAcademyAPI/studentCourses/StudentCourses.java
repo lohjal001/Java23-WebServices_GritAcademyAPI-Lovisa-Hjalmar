@@ -3,8 +3,8 @@ package com.example.GritAcademyAPI.studentCourses;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "student_courses")
-@Table(name = "student_courses")
+@Entity(name = "studentCourses")
+@Table(name = "studentCourses")
 @Data
 public class StudentCourses {
 

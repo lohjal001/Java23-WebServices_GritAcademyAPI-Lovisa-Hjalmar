@@ -8,8 +8,10 @@ import java.util.List;
 @Data
 public class CoursesDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
+    private String description;
+    private String title;
     List<StudentsDTO> students;
 
 }

@@ -1,13 +1,20 @@
 package com.example.GritAcademyAPI.courses;
 
+import com.example.GritAcademyAPI.students.Students;
 import jakarta.persistence.*;
 
-import lombok.Data;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity(name = "courses")
 @Table(name = "courses")
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Courses {
 
 
@@ -22,6 +29,8 @@ public class Courses {
     private String description;
 
 
+    @ManyToMany(mappedBy = "courses")
 
+    private Set<Students> students = new HashSet<>();
 }
 

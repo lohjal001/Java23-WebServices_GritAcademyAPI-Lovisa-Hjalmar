@@ -9,10 +9,6 @@ public class StudentCoursesServices {
     @Autowired
     StudentCoursesRepository studentCoursesRepository;
 
-    //This is an example of infinite recursion / circular query problem
-    //Taxicos have a list of Vehicles and Vehicles have a list of Taxicos
-    //While trying to populated list, Spring Boot is going deeper and deeper
-    //in populating next list. Check out getVehicles to see how to avoid this problem
     public Iterable<StudentCourses> getStudentCourses(){
         return studentCoursesRepository.findAll();
     }
