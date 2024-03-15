@@ -1,5 +1,6 @@
 package com.example.GritAcademyAPI.courses;
 
+import com.example.GritAcademyAPI.ResourceNotFoundException;
 import com.example.GritAcademyAPI.students.Students;
 import com.example.GritAcademyAPI.students.StudentsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,15 @@ public class CoursesServices {
     @Autowired
     CoursesRepository coursesRepository;
 
-    public Iterable<Courses> getCourses() {
-        return coursesRepository.findAll();
+    public List<CoursesDTO> getCourses() {
+        List<CoursesDTO> coursesDTOS = new ArrayList<>();
+        coursesRepository.findAll().forEach(courses -> coursesDTOS.add(this.mapToDTO(courses)));
+        return coursesDTOS;
     }
 
     public List<CoursesDTO> getCoursesById(Long id){
         List<CoursesDTO> coursesDTOS = new ArrayList<>();
-        coursesRepository.findById(id).forEach(courses -> coursesDTOS.add(this.mapToDTO(courses)));
+        coursesRepository.findById(id).map(courses -> coursesDTOS.add(this.mapToDTO(courses))).orElseThrow(() -> new ResourceNotFoundException("404 Course not found with " + id));
         return coursesDTOS;
     }
 
@@ -34,6 +37,12 @@ public class CoursesServices {
     public List<CoursesDTO> getCoursesByContains(String title){
         List<CoursesDTO> coursesDTOS = new ArrayList<>();
         coursesRepository.findByNameContaining(title).forEach(courses -> coursesDTOS.add(this.mapToDTO(courses)));
+        return coursesDTOS;
+    }
+
+    public List<CoursesDTO> getCoursesByDescription(String description){
+        List<CoursesDTO> coursesDTOS = new ArrayList<>();
+        coursesRepository.findByDescriptionContaining(description).forEach(courses -> coursesDTOS.add(this.mapToDTO(courses)));
         return coursesDTOS;
     }
 

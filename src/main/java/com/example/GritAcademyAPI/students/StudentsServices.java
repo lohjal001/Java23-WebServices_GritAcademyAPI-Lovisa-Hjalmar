@@ -1,9 +1,12 @@
 package com.example.GritAcademyAPI.students;
 
+import com.example.GritAcademyAPI.ResourceNotFoundException;
 import com.example.GritAcademyAPI.courses.Courses;
 import com.example.GritAcademyAPI.courses.CoursesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,7 @@ public class StudentsServices {
 
     public List<StudentsDTO> getStudentById(Long id){
         List<StudentsDTO> studentsDTOS = new ArrayList<>();
-        studentsRepository.findById(id).forEach(students -> studentsDTOS.add(this.mapToDTO(students)));
+        studentsRepository.findById(id).map(students -> studentsDTOS.add(this.mapToDTO(students))).orElseThrow(() -> new ResourceNotFoundException("404 User not found with id " + id));
         return studentsDTOS;
     }
     public List<StudentsDTO> getStudentByFname(String fname){

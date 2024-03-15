@@ -1,5 +1,7 @@
 package com.example.GritAcademyAPI.courses;
 
+import com.example.GritAcademyAPI.ResourceNotFoundException;
+import com.example.GritAcademyAPI.students.StudentsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,17 +20,18 @@ public class CoursesController {
     CoursesServices coursesServices;
 
     @GetMapping(value = "/courses", produces = MediaType.APPLICATION_JSON_VALUE)
-    Iterable<Courses> getCourses(){
+    List<CoursesDTO> getCourses(){
         return coursesServices.getCourses();
     }
 
     @GetMapping (value = "/courses/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<CoursesDTO>> searchCoursesById (@PathVariable(value = "id") Long id) {
-        List<CoursesDTO> courses = coursesServices.getCoursesById(id);
-        if(courses.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        if (id<0) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        } else {
+            List<CoursesDTO> courses = coursesServices.getCoursesById(id);
+            return new ResponseEntity<>(courses, HttpStatus.OK);
         }
-        return new ResponseEntity<>(courses, HttpStatus.OK);
 
     }
 
@@ -36,20 +39,32 @@ public class CoursesController {
     ResponseEntity<List<CoursesDTO>> searchCoursesByName (@PathVariable(value = "name") String name) {
         List<CoursesDTO> courses = coursesServices.getCoursesByName(name);
         if(courses.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("404 Course not found.");
         }
         return new ResponseEntity<>(courses, HttpStatus.OK);
 
     }
 
-    @GetMapping (value = "/courses/{}/{}/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping (value = "/courses/{}/{name}/{title}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<CoursesDTO>> getCoursesByContains (@PathVariable(value = "title") String title) {
         List<CoursesDTO> courses = coursesServices.getCoursesByContains(title);
         if(courses.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("404 Course not found.");
         }
         return new ResponseEntity<>(courses, HttpStatus.OK);
 
     }
+
+    @GetMapping (value = "/courses/{}/{name}/{title}/{description}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<List<CoursesDTO>> getCoursesByDescription (@PathVariable(value = "description") String description) {
+        List<CoursesDTO> courses = coursesServices.getCoursesByDescription(description);
+        if(courses.isEmpty()){
+            throw new ResourceNotFoundException("404 Course not found.");
+        }
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+
+    }
+
+
 }
 
